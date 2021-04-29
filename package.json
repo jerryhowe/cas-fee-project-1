@@ -1,0 +1,35 @@
+{
+  "name": "notes-pro",
+  "version": "1.0.0",
+  "description": "Notes Application Built Using Vanilla HTML/CSS/JS",
+  "main": "public/scripts/main.js",
+  "type": "module",
+  "scripts": {
+    "start": "node ./src/index.js",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "stylelint": "stylelint \"./src/**/*.css\"",
+    "stylelint:fix": "stylelint \"./src/**/*.css\" --fix",
+    "w3c": "html-validator --file ./src/public/index.html  --verbose",
+    "w3c:fix": "html-validator --file ./src/public/index.html  --verbose --fix",
+    "eslint": "eslint ./src/**/*.js",
+    "eslint:fix": "eslint ./src/**/*.js --fix",
+    "all": "npm run stylelint && npm run w3c  && npm run eslint  && node -e \"console.log('npm run all completed')\""
+  },
+  "author": "Jerry Howe",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^7.25.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-standard": "^16.0.2",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-node": "^11.1.0",
+    "eslint-plugin-promise": "^4.3.1",
+    "html-validator-cli": "^7.0.1",
+    "prettier": "^2.2.1",
+    "stylelint": "^13.12.0",
+    "stylelint-config-standard": "^21.0.0"
+  },
+  "dependencies": {
+    "express": "^4.17.1"
+  }
+}
