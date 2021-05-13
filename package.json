@@ -5,7 +5,7 @@
   "main": "public/scripts/main.js",
   "type": "module",
   "scripts": {
-    "start": "node ./src/index.js",
+    "start": "node --experimental-modules --es-module-specifier-resolution=node src/index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
     "stylelint": "stylelint \"./src/**/*.css\"",
     "stylelint:fix": "stylelint \"./src/**/*.css\" --fix",
@@ -18,6 +18,7 @@
   "author": "Jerry Howe",
   "license": "ISC",
   "devDependencies": {
+    "@types/node": "^15.0.3",
     "eslint": "^7.25.0",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-airbnb-base": "^14.2.1",
@@ -26,7 +27,6 @@
     "eslint-plugin-node": "^11.1.0",
     "eslint-plugin-promise": "^4.3.1",
     "html-validator-cli": "^7.0.1",
-    "prettier": "^2.2.1",
     "stylelint": "^13.12.0",
     "stylelint-config-standard": "^21.0.0"
   },
