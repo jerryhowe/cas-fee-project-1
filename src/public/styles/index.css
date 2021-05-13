@@ -1,3 +1,140 @@
-* {
-  box-sizing: border-box;
+:root {
+  --background: #eee;
+  --color: #444;
+}
+
+.dark-theme {
+  --background: #444;
+  --color: eee;
+}
+
+body {
+  font-family: "Titillium Web", sans-serif;
+  color: var(--color);
+  background: var(--background);
+  transition: background 0.3s ease, color 1s ease;
+}
+
+h1 {
+  font-weight: 900;
+  font-size: 1.25rem;
+  margin-bottom: 1.4em;
+  border-bottom: 1px solid #000;
+}
+
+.container {
+  display: grid;
+  height: 100%;
+  grid-template-columns: 1fr 20%;
+  grid-template-rows: auto 1fr auto;
+  grid-row-gap: 0.5em;
+  grid-column-gap: 0.5em;
+  grid-template-areas:
+    "header header"
+    "content sidebar"
+    "footer footer";
+}
+
+.header {
+  font-weight: 700;
+  grid-area: header;
+
+  /* background-color: #fffd89; */
+}
+
+.content {
+  grid-area: content;
+
+  /* background-color: #ffbbbb; */
+  padding: 0.5em;
+}
+
+.sidebar {
+  font-weight: 200;
+  font-style: italic;
+  grid-area: sidebar;
+
+  /* background-color: #a8fdaf; */
+  padding: 0.5em;
+}
+
+.footer {
+  font-weight: 200;
+  grid-area: footer;
+
+  /* background-color: #84e2ff; */
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+}
+
+.form * {
+  margin: 0.2em;
+}
+
+#theme-button {
+  float: right;
+}
+
+button {
+  font-family: "Titillium Web", sans-serif;
+  font-weight: 400;
+}
+
+/* h1:not(:hover) {
+  color: rgb(9, 44, 158);
+} */
+
+h1::first-letter {
+  font-size: 30px;
+}
+
+ul {
+  display: inline;
+  text-decoration: none;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+nav ul li {
+  display: inline;
+}
+
+nav ul li:not(:last-of-type) {
+  margin-right: 2em;
+}
+
+a {
+  color: blue;
+  opacity: 1;
+
+  /* transition: <property> <duration> [<timing-function>]; */
+  transition: color 0.3s cubic-bezier(0.17, 0.67, 0, 0.68);
+
+  /* transition: color 0.3s ease, opacity 1s; */
+}
+
+nav ul li a {
+  color: blue !important;
+  text-decoration: none;
+}
+
+a:visited {
+  color: purple;
+  opacity: 0.6;
+}
+
+nav ul li a:hover {
+  color: teal;
+}
+
+a::before {
+  content: "> ";
+}
+
+img {
+  width: 50vw;
 }
