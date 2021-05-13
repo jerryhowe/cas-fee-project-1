@@ -1,6 +1,7 @@
 {
   "extends": [
-    "airbnb-base"
+    "airbnb-base",
+    "prettier"
   ],
   "env": {
     "node": true,
@@ -10,7 +11,10 @@
   "parserOptions": {
     "ecmaVersion": 2020
   },
+  "plugins": ["prettier"],
   "rules": {
+    "prettier/prettier": "error",
+    "indent": ["error", 4],
     "no-console": "off",
     "no-plusplus": "off",
     "import/prefer-default-export": "off"

@@ -1,17 +1,17 @@
-import express from 'express';
-import * as noteController from '../controllers/noteController';
+import express from 'express'
+import * as noteController from '../controllers/noteController'
 
-const router = express.Router();
+const router = express.Router()
 
 // [C]REATE
-router.put('/', noteController.createNote);
+router.put('/', noteController.createNote)
 // [R]EAD
-router.get('/', noteController.getAllNotes);
-router.get('/:id', noteController.getNoteById);
+router.get('/', noteController.getAllNotes)
+router.get('/:id', noteController.getNoteById)
 // [U]PDATE
-router.patch('/', noteController.updateNote);
+router.patch('/', noteController.updateNote)
 
 // [D]ELETE
-router.delete('/:id', noteController.deleteNote);
+router.delete('/:id', noteController.deleteNote)
 
-export default router;
+export default router
