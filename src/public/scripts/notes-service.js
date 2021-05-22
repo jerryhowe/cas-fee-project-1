@@ -1,14 +1,26 @@
-function compareNotesByImportanceDesc(n1, n2) {
-  return n2.importance - n1.importance
-}
-function compareNotesByImportanceAsc(n1, n2) {
-  return n1.importance - n2.importance
+// default order is ascending
+function compareNotesBy(notes, property, order) {
+  return notes
+    .slice()
+    .sort((n1, n2) =>
+      order === 'DESC'
+        ? n2[property] - n1[property]
+        : n1[property] - n2[property]
+    )
 }
 
 export function sortNotesByImportance(notes, order) {
-  if (order === 'DESC') {
-    notes.sort(compareNotesByImportanceDesc)
-  } else {
-    notes.sort(compareNotesByImportanceAsc)
-  }
+  return compareNotesBy(notes, 'importance', order)
+}
+
+export function sortNotesByCreationDate(notes, order) {
+  return compareNotesBy(notes, 'creationDate', order)
+}
+
+export function sortNotesByCompletionDate(notes, order) {
+  return compareNotesBy(notes, 'completionDate', order)
+}
+
+export function sortNotesByDueDate(notes, order) {
+  return compareNotesBy(notes, 'dueDate', order)
 }
