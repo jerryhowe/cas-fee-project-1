@@ -14,5 +14,5 @@ app.use(express.static(join(currentDir, '/public')))
 app.use('/note', noteRouter)
 
 app.listen(port, () => {
-    console.debug(`Notes app listening at http://localhost:${port}`)
+  console.debug(`Notes app listening at http://localhost:${port}`)
 })
