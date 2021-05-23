@@ -1,4 +1,5 @@
-import Note from '../models/Note'
+import { findNoteById } from '../service/notes-service'
+import { notes } from '../../__fixtures__/mock/mock-notes'
 
 // Display list of all Notes.
 
@@ -8,21 +9,20 @@ export function createNote(req, res) {
 }
 
 export function getAllNotes(req, res) {
-  const notes = []
-  for (let i = 0; i < 10; i++) {
-    notes.push(new Note('title', 'description', 5, new Date(), true))
-  }
   res.json(notes).send()
 }
 
 export function getNoteById(req, res) {
-  console.log(req.params.id)
-  res.json(new Note('title', 'description', 5, new Date(), true)).send()
+  const note = findNoteById(notes, req.params.id)
+  if (note) {
+    res.json(note)
+  }
+  res.status(404).send()
 }
 
 export function updateNote(req, res) {
   // TODO : to be implemented
-  res.json(req.body).send()
+  res.json(req.body)
 }
 
 export function deleteNote(req, res) {

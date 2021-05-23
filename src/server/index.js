@@ -3,7 +3,7 @@ import express from 'express'
 import { dirname, join } from 'path'
 import { fileURLToPath } from 'url'
 
-import noteRouter from './routes/note'
+import noteRouter from './routes/note-router'
 
 const currentDir = dirname(fileURLToPath(import.meta.url))
 

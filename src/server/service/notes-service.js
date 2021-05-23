@@ -1,3 +1,7 @@
+export function findNoteById(notes, id) {
+  return notes.find((note) => parseInt(id, 10) === parseInt(note.id, 10))
+}
+
 // default order is ascending
 function compareNotesBy(notes, property, order) {
   return notes

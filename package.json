@@ -5,7 +5,7 @@
   "main": "public/scripts/main.js",
   "type": "module",
   "scripts": {
-    "start": "node --experimental-modules --es-module-specifier-resolution=node src/index.js",
+    "start": "node --experimental-modules --es-module-specifier-resolution=node src/server/index.js",
     "test": "jest",
     "stylelint": "stylelint \"./src/**/*.css\"",
     "stylelint:fix": "stylelint \"./src/**/*.css\" --fix",
