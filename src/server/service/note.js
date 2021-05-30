@@ -1,5 +1,6 @@
 export default class Note {
   constructor(
+    id,
     title,
     description,
     importance,
@@ -8,7 +9,7 @@ export default class Note {
     completionDate,
     done
   ) {
-    // generate id for each note...
+    this.id = id
     this.title = title
     this.description = description
     this.importance = importance

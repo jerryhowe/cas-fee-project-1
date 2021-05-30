@@ -131,10 +131,6 @@ nav ul li a:hover {
   color: teal;
 }
 
-a::before {
-  content: "> ";
-}
-
 img {
   width: 50vw;
 }

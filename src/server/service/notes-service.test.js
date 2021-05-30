@@ -3,8 +3,8 @@ import {
   sortNotesByCompletionDate,
   sortNotesByImportance,
 } from './notes-service'
-import { notes } from '../../__fixtures__/mock/mock-notes'
-import { today, fourDaysAgo } from '../../__fixtures__/mock/mock-dates'
+import { notes } from '../../public/__fixtures__/mock/mock-notes'
+import { today, fourDaysAgo } from '../../public/__fixtures__/mock/mock-dates'
 
 describe('notes-service tests', () => {
   it('should sort notes by importance (ascending order)', () => {

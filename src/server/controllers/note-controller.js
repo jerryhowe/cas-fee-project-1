@@ -1,5 +1,5 @@
 import { findNoteById } from '../service/notes-service'
-import { notes } from '../../__fixtures__/mock/mock-notes'
+import { notes } from '../../public/__fixtures__/mock/mock-notes'
 
 // Display list of all Notes.
 
