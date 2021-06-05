@@ -8,7 +8,7 @@ import noteRouter from './routes/note-router'
 const currentDir = dirname(fileURLToPath(import.meta.url))
 
 const app = express()
-const port = 3000
+const port = 4000
 
 app.use(express.static(join(currentDir, '../public')))
 app.use('/note', noteRouter)

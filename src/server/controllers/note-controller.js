@@ -1,5 +1,5 @@
-import { findNoteById } from '../service/notes-service'
-import { notes } from '../../public/__fixtures__/mock/mock-notes'
+import { findNoteById } from '../service/notes-service.mjs'
+import { notes } from '../../public/__fixtures__/mock/mock-notes.mjs'
 
 // Display list of all Notes.
 

@@ -32,6 +32,16 @@ body {
   display: none;
 }
 
+.topnav .lightmode-darkmode {
+  color: #f2f2f2;
+  float: right;
+  display: block;
+  text-align: center;
+  vertical-align: center;
+  padding: 1rem;
+  cursor: pointer;
+}
+
 @media screen and (max-width: 600px) {
   .topnav a:not(:first-child) {
     display: none;
@@ -62,9 +72,13 @@ body {
 }
 
 /* Style the tab content */
-.tabcontent {
+div[class*="tabcontent"] {
   display: none;
-  padding: 6px 12px;
+  padding: 0 10%;
   border: 1px solid #ccc;
   border-top: none;
+}
+
+div[class*="tabcontent default"] {
+  display: block;
 }

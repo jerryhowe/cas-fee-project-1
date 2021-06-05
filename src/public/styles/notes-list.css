@@ -1,0 +1,100 @@
+.notes-list ul {
+  padding: 0;
+}
+
+.notes-list ul li {
+  background: #ccc;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+  list-style: none;
+}
+
+[class^="note-child"] {
+  margin: 10px;
+}
+
+.note-child-done {
+  /* background: #9595ef; */
+  flex: 1 1 20%;
+}
+
+.note-child-title-desc {
+  /* background: #a1ffa1; */
+  flex: 1 1 60%;
+}
+
+.note-child-edit {
+  /* background: #d78888; */
+  flex: 1 1 20%;
+}
+
+.edit-button,
+.delete-button {
+  width: 50%;
+  padding: 0.25rem 0.5rem;
+  cursor: pointer;
+  color: white;
+  outline: none;
+  margin: 0.5rem 0;
+}
+
+.edit-button {
+  background-color: #4c92ff;
+  border: 2px solid #4c92ff;
+  border-radius: 5px;
+}
+
+.delete-button {
+  background-color: #ff5a85;
+  border: 2px solid #ff5a85;
+  border-radius: 5px;
+}
+
+.edit-button:focus,
+.edit-button:active,
+.edit-button:hover {
+  background-color: #0366ff;
+  border: 2px solid #0366ff;
+}
+
+.delete-button:hover {
+  background-color: #ff89a3;
+  border: 2px solid #ff89a3;
+}
+
+.delete-button:focus,
+.delete-button:active {
+  background-color: #ff2559;
+  border: 2px solid #ff2559;
+}
+
+.notes-list .title-desc {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
+.notes-list .title-desc textarea {
+  width: 100%;
+}
+
+.notes-list .title-desc header {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.title-desc header h3,
+.title-desc header h4 {
+  display: inline;
+}
+
+.title-desc header h4 {
+  font-family: "Titillium Web", sans-serif;
+  font-weight: bold;
+  color: red;
+}

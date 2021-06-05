@@ -4,62 +4,59 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" href="styles/navbar.css">
-    <script src="scripts/handlebars-v4.7.7.js"></script>
-    <script src="scripts/navbar.js"></script>
-    <script type="module" src="controllers/note-controller.js"></script>
+    <link rel="stylesheet" href="styles/notes-list.css">
+    <script src="scripts/libs/handlebars-v4.7.7.js"></script>
+    <script src="scripts/navbar.mjs"></script>
+    <script type="module" src="scripts/controllers/note-controller.mjs"></script>
+    <script type="module" src="scripts/util/date-util.mjs"></script>
+    <script src="https://kit.fontawesome.com/0b73532c56.js" crossorigin="anonymous"></script>
 
-    <title>Notes App</title>
+    <title>Notes Pro</title>
 
     <script id="notes-list-template" type="text/x-handlebars-template">
-        <div class="body">
-            <table>
-                <tr>
-                    <th>Title</th>
-                    <th>Description</th>
-                    <th>Importance</th>
-                    <th>Creation Date</th>
-                    <th>Due Date</th>
-                    <th>Completion Date</th>
-                    <th>Done</th>
-                </tr>
-                {{#each notes}}
-                    <tr>
-                        <td>{{title}}</td>
-                        <td>{{description}}</td>
-                        <td>{{importance}}</td>
-                        <td>{{creationDate}}</td>
-                        <td>{{dueDate}}</td>
-                        <td>{{completionDate}}</td>
-                        <td>{{done}}</td>
-                    </tr>
+        <div class="notes-list">
+            <h2>My Notes</h2>
+            <ul>
+                {{#each parsedNotes}}
+                    <li>
+                        <label class="note-child-done">
+                            <input type="checkbox" name="checkbox" data-done-note-id value="{{done}}">Done {{#if done}}
+                            [{{completionDate}}]{{/if}}
+                        </label>
+                        <div class="note-child-title-desc title-desc">
+                            <header>
+                                <h3>{{title}}</h3><h4>{{importance}}</h4>
+                            </header>
+                            <textarea>{{description}}</textarea>
+                        </div>
+                        <span class="note-child-edit-delete">
+                        <button class="edit-button" data-edit-note-id="{{id}}"><i class="fas fa-edit"></i></button>
+                        <button class="delete-button" data-delete-note-id="{{id}}"><i
+                                class="fas fa-trash-alt"></i></button>
+                    </span>
+                    </li>
                 {{/each}}
-            </table>
+            </ul>
         </div>
     </script>
 </head>
 <body>
 
-<div class="topnav" id="myTopnav">
+<div class="topnav" id="top-navigation-bar">
     <!--  <a href="#home">Home</a>-->
-    <a href="#" class="tablinks" onclick="openTab(event, 'allNotes')">All Notes</a>
+    <a href="#" class="tablinks active" onclick="openTab(event, 'allNotes')">All Notes</a>
     <a href="#" class="tablinks" onclick="openTab(event, 'byDueDate')">By Due Date</a>
     <a href="#" class="tablinks" onclick="openTab(event, 'byDateCreated')">By Date Created</a>
     <a href="#" class="tablinks" onclick="openTab(event, 'byImportance')">By Importance</a>
-    <a href="javascript:void(0);" class="icon" onclick="myFunction()">
+    <span class="lightmode-darkmode">
+        <i class="fas fa-sun" onclick="toggleLightModeDarkMode(false)"></i> /
+        <i class="fas fa-moon" onclick="toggleLightModeDarkMode(true)"></i>
+    </span>
+    <a href="javascript:void(0);" class="icon" onclick="openMenu()">
         <i class="fa fa-bars"></i>
     </a>
 </div>
-
-<!--<div style="padding-left:16px">-->
-<!--  <h2>Responsive Topnav Example</h2>-->
-<!--  <p>Resize the browser window to see how it works.</p>-->
-<!--</div>-->
-
-
-<script id="template" type="text/x-handlebars-template">
-    <p>Use the <strong>{{power}}</strong>, {{name}}!</p>
-</script>
-<div id="allNotes" class="tabcontent">
+<div id="allNotes" class="tabcontent default">
     <h3>All Notes</h3>
     <div id="notes-container"></div>
 </div>
