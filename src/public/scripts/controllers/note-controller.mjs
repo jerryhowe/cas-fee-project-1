@@ -11,8 +11,9 @@ class NotesController {
 
     showNotes() {
         const parsedNotes = notes.map((note) => {
-            const {title, description, importance, creationDate, dueDate, completionDate, done} = note
+            const {id, title, description, importance, creationDate, dueDate, completionDate, done} = note
             return {
+                id,
                 title,
                 description,
                 importance: "!".repeat(importance),
@@ -28,12 +29,32 @@ class NotesController {
     }
 
     initEventHandlers() {
+        const createNoteButton = document.querySelector("#create-note-button");
+        createNoteButton.addEventListener('click', ()=>{
+            createEditModal.open();
+        })
+        const deleteConfirmationModal = document.querySelector("#delete-confirmation-modal");
+        const createEditModal = document.querySelector("#create-edit-modal");
+
+        deleteConfirmationModal.addEventListener('confirm', () => {
+            console.log('deleting note...')
+        })
+        createEditModal.addEventListener('confirm', () => {
+            console.log('saving note...')
+        })
+
         this.notesContainer.addEventListener('click', (event) => {
-                console.log('click detected!')
                 const editNoteId = Number(event.target.dataset.editNoteId);
                 const deleteNoteId = Number(event.target.dataset.deleteNoteId);
                 editNoteId && console.log(`EDIT CLICKED with ID ${editNoteId}`);
                 deleteNoteId && console.log(`DELETE CLICKED with ID ${deleteNoteId}`);
+
+                if (deleteNoteId) {
+                    deleteConfirmationModal.open();
+                }
+                if (editNoteId) {
+                    createEditModal.open();
+                }
             }
         );
     }

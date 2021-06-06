@@ -2,6 +2,13 @@
   padding: 0;
 }
 
+#allNotes .all-notes-title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .notes-list ul li {
   background: #ccc;
   display: flex;
@@ -25,6 +32,10 @@
   flex: 1 1 60%;
 }
 
+.note-child-title-desc textarea {
+  resize: none;
+}
+
 .note-child-edit {
   /* background: #d78888; */
   flex: 1 1 20%;
@@ -38,6 +49,19 @@
   color: white;
   outline: none;
   margin: 0.5rem 0;
+}
+
+.create-button {
+  padding: 0.25rem 0.5rem;
+  background: #04aa6d;
+  color: white;
+  border: 2px solid #04aa6d;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
+.fas {
+  pointer-events: none;
 }
 
 .edit-button {
