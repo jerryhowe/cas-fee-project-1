@@ -4,7 +4,7 @@ import {
   dayBeforeYesterday,
   threeDaysAgo,
   fourDaysAgo,
-} from './mock-dates.mjs'
+} from './mock-dates'
 
 export const notes = [
   {

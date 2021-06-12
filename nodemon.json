@@ -3,11 +3,11 @@
   "ignore": [".git", "node_modules/**/node_modules"],
   "verbose": true,
   "execMap": {
-    "js": "node --experimental-modules --es-module-specifier-resolution=node src/server/index.js"
+    "js": "node --experimental-modules --es-module-specifier-resolution=node src/index.mjs"
   },
   "watch": ["."],
   "env": {
     "NODE_ENV": "development"
   },
-  "ext": "js,json, cjs, mjs, pug"
+  "ext": "js,json,cjs,mjs"
 }

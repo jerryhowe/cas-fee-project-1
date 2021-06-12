@@ -2,18 +2,18 @@
   "name": "notes-pro",
   "version": "1.0.0",
   "description": "Notes Application Built Using Vanilla HTML/CSS/JS",
-  "main": "public/scripts/main.js",
+  "main": "src/index.mjs",
   "type": "module",
   "scripts": {
-    "start": "node --experimental-modules --es-module-specifier-resolution=node src/server/index.js",
+    "start": "node --experimental-modules --es-module-specifier-resolution=node src/index.mjs",
     "dev:debug": "nodemon",
     "test": "jest",
     "stylelint": "stylelint \"./src/**/*.css\"",
     "stylelint:fix": "stylelint \"./src/**/*.css\" --fix",
-    "w3c": "html-validator --file ./src/public/index.html  --verbose",
-    "w3c:fix": "html-validator --file ./src/public/index.html  --verbose --fix",
-    "eslint": "eslint ./src/**/*.js",
-    "eslint:fix": "eslint ./src/**/*.js --fix",
+    "w3c": "html-validator --file src/public/html/index.html  --verbose",
+    "w3c:fix": "html-validator --file src/public/html/index.html  --verbose --fix",
+    "eslint": "eslint . --ext=mjs,js",
+    "eslint:fix": "eslint . --ext=mjs,js --fix",
     "all": "npm run stylelint && npm run w3c  && npm run eslint && npm test && node -e \"console.log('npm run all completed')\""
   },
   "author": "Jerry Howe",
@@ -43,6 +43,12 @@
     "stylelint-config-standard": "^21.0.0"
   },
   "dependencies": {
-    "express": "^4.17.1"
+    "apollo-server": "^2.25.1",
+    "apollo-server-express": "^2.25.1",
+    "body-parser": "^1.19.0",
+    "express": "^4.17.1",
+    "graphql": "^15.5.0",
+    "nedb": "^1.8.0",
+    "nedb-promise": "^2.0.1"
   }
 }

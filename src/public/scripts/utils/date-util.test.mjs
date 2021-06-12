@@ -1,6 +1,6 @@
-import { toStringWithLocaleWithWeekday, toStringWithLocale } from './date-util.mjs'
+import { toStringWithLocaleWithWeekday, toStringWithLocale } from './date-util'
 
-describe('date-util test', () => {
+describe('date-utils test', () => {
   it(`should print today's date in en-us locale`, () => {
     expect(toStringWithLocaleWithWeekday(new Date('2021-05-22'))).toBe(
       'Saturday, May 22, 2021'

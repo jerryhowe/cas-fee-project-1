@@ -18,7 +18,17 @@
     "indent": ["error", 2],
     "no-console": "off",
     "no-plusplus": "off",
-    "import/prefer-default-export": "off"
+    "import/prefer-default-export": "off",
+    "import/extensions": [
+      "error",
+      "always",
+      {
+        "js": "off",
+        "mjs": "off"
+      }
+    ],
+    "no-return-await": "off",
+    "class-methods-use-this": "off"
   },
   "ignorePatterns": ["**/scripts/libs/*.js"]
 }

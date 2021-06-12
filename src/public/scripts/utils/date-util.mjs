@@ -31,16 +31,17 @@ export function convertToNearFutureString(date, withWeekday = true) {
   const tomorrow = new Date()
   yesterday.setDate(today.getDate() - 1)
   tomorrow.setDate(today.getDate() + 1)
-  if (isSameDay(date, yesterday)) {
+  const parsedDate = Number.isInteger(date) ? new Date(date) : date
+  if (isSameDay(parsedDate, yesterday)) {
     return 'Yesterday'
   }
-  if (isSameDay(date, today)) {
+  if (isSameDay(parsedDate, today)) {
     return 'Today'
   }
-  if (isSameDay(date, tomorrow)) {
+  if (isSameDay(parsedDate, tomorrow)) {
     return 'Tomorrow'
   }
   return withWeekday
-    ? toStringWithLocaleWithWeekday(date)
-    : toStringWithLocale(date)
+    ? toStringWithLocaleWithWeekday(parsedDate)
+    : toStringWithLocale(parsedDate)
 }

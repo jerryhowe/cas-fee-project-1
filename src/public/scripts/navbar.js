@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-unused-vars
 function openMenu() {
   const x = document.getElementById('top-navigation-bar')
   if (x.className === 'topnav') {
@@ -7,6 +8,7 @@ function openMenu() {
   }
 }
 
+// eslint-disable-next-line no-unused-vars
 function openTab(evt, tabName) {
   console.log(evt)
   console.log(tabName)
@@ -19,9 +21,11 @@ function openTab(evt, tabName) {
     tabLinks[i].className = tabLinks[i].className.replace(' active', '')
   }
   document.getElementById(tabName).style.display = 'block'
+  // eslint-disable-next-line no-param-reassign
   evt.currentTarget.className += ' active'
 }
 
+// eslint-disable-next-line no-unused-vars
 function toggleLightModeDarkMode(turnDark) {
   console.log(`turning ${turnDark ? 'dark' : 'light'}...`)
   console.log('to be implemented...')

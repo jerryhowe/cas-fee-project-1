@@ -1,6 +1,6 @@
-export default class Note {
+export class Note {
   constructor(
-    id,
+    // id,
     title,
     description,
     importance,
@@ -9,7 +9,7 @@ export default class Note {
     completionDate,
     done
   ) {
-    this.id = id
+    // this.id = id
     this.title = title
     this.description = description
     this.importance = importance
