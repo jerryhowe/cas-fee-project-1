@@ -45,3 +45,14 @@ export function convertToNearFutureString(date, withWeekday = true) {
     ? toStringWithLocaleWithWeekday(parsedDate)
     : toStringWithLocale(parsedDate)
 }
+
+export function convertEpochToDateString(epoch) {
+  const date = new Date(epoch)
+  const yyyy = date.getFullYear().toString().padStart(2, '0')
+  const mm = (date.getMonth() + 1).toString().padStart(2, '0')
+  const dd = date.getDate().toString().padStart(2, '0')
+  console.log(yyyy)
+  console.log(mm)
+  console.log(dd)
+  return `${yyyy}-${mm}-${dd}`
+}

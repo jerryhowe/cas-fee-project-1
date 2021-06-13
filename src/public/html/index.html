@@ -91,7 +91,7 @@
     <p>Are you sure you want to delete this note?</p>
 </custom-modal>
 
-<custom-modal id="create-edit-modal">
+<custom-modal id="create-edit-modal" hideActionButtons>
     <h1 slot="title">Create/ Edit Note</h1>
     <form class="form" id="form">
         <label for="title">Title</label>
@@ -113,8 +113,8 @@
             <option value="4">4 - Not So Important</option>
             <option value="5">5 - Not Important At All</option>
         </select>
-        <label for="duedate">Due Date</label>
-        <input id="duedate" type="date"/>
+        <label for="due-date">Due Date</label>
+        <input id="due-date" type="date"/>
         <button type="submit">Create Note</button>
     </form>
 </custom-modal>

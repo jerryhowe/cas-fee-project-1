@@ -68,11 +68,12 @@ class Modal extends HTMLElement {
             #actions button {
                 margin: 0 0.25rem;
             }
+            
         </style>
         <div id="backdrop"></div>
         <div id="modal">
             <header>
-                <slot name="title">Please Confirm Payment</slot>
+                <slot name="title">Default Title</slot>
             </header>
             <section id="main">
                 <slot></slot>
@@ -100,6 +101,10 @@ class Modal extends HTMLElement {
       this.isOpen = true
     } else {
       this.isOpen = false
+    }
+    if (this.hasAttribute('hideActionButtons')) {
+      this.shadowRoot.querySelector('#actions').style.display = 'none'
+      // this.hideActionButtons = true
     }
   }
 

@@ -4,13 +4,28 @@ class NoteService {
   async addNote(title, description, importance, dueDate) {
     const query = `mutation {
                     addNote(input: {
-                        title: ${title},
-                        description: ${description},
+                        title: "${title}",
+                        description: "${description}",
                         importance: ${importance},
-                        dueDate: ${dueDate}) {
+                        dueDate: ${dueDate}}) {
                           _id
                       }
                     }`
+    console.log(query)
+    return await graphqlService.ajax(query)
+  }
+
+  async updateNote(id, title, description, importance, dueDate) {
+    const query = `mutation {
+                    updateNote(id: "${id}", input: {
+                        title: "${title}",
+                        description: "${description}",
+                        importance: ${importance},
+                        dueDate: ${dueDate}}) {
+                          _id
+                      }
+                    }`
+    console.log(query)
     return await graphqlService.ajax(query)
   }
 
@@ -29,7 +44,7 @@ class NoteService {
 
   async getNote(id) {
     const query = `{
-        Note(id: ${id}) {
+        Note(id: "${id}") {
           title,
           description,
           importance,

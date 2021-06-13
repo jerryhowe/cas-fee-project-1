@@ -1,13 +1,20 @@
-import { convertToNearFutureString } from '../utils/date-util.mjs'
+import {
+  convertEpochToDateString,
+  convertToNearFutureString,
+} from '../utils/date-util.mjs'
 import { noteService } from '../services/note-service.mjs'
+
+const FormMode = Object.freeze({ CREATE: 1, EDIT: 2 })
 
 class NotesController {
   constructor() {
+    this.formSubmitMode = FormMode.CREATE
     // eslint-disable-next-line no-undef
     this.noteTemplateCompiled = Handlebars.compile(
       document.getElementById('notes-list-template').innerHTML
     )
     this.notesContainer = document.getElementById('notes-container')
+    this.createEditForm = document.querySelector('#create-edit-modal')
   }
 
   async showNotes() {
@@ -44,10 +51,13 @@ class NotesController {
 
   initEventHandlers() {
     const createNoteButton = document.querySelector('#create-note-button')
-    const createEditModal = document.querySelector('#create-edit-modal')
-
+    this.addFormSubmitListenerAndAction()
     createNoteButton.addEventListener('click', () => {
-      createEditModal.open()
+      this.formSubmitMode = FormMode.CREATE
+      this.createEditForm.querySelector('h1').innerHTML = 'Create New Note'
+      this.createEditForm.querySelector('button').innerHTML = 'Create Note'
+      this.resetForm()
+      this.createEditForm.open()
     })
     const deleteConfirmationModal = document.querySelector(
       '#delete-confirmation-modal'
@@ -56,13 +66,9 @@ class NotesController {
     deleteConfirmationModal.addEventListener('confirm', () => {
       console.log('deleting note...')
     })
-    createEditModal.addEventListener('confirm', () => {
-      console.log('saving note...')
-    })
 
     this.notesContainer.addEventListener('click', (event) => {
-      const editNoteId = Number(event.target.dataset.editNoteId)
-      const deleteNoteId = Number(event.target.dataset.deleteNoteId)
+      const { deleteNoteId, editNoteId } = event.target.dataset
       // editNoteId && console.log(`EDIT CLICKED with ID ${editNoteId}`)
       // deleteNoteId && console.log(`DELETE CLICKED with ID ${deleteNoteId}`)
 
@@ -70,14 +76,90 @@ class NotesController {
         deleteConfirmationModal.open()
       }
       if (editNoteId) {
-        createEditModal.open()
+        this.editNoteId = editNoteId
+        this.createEditForm.querySelector('h1').innerHTML = 'Edit Note'
+        this.createEditForm.querySelector('button').innerHTML = 'Save Note'
+        noteService.getNote(editNoteId).then((note) => {
+          this.formSubmitMode = FormMode.EDIT
+          const { title, description, importance, dueDate } = note
+          // console.log(dueDate)
+          // console.log(convertEpochToDateString(dueDate))
+          this.createEditForm
+            .querySelector('#title')
+            .setAttribute('value', title)
+          this.createEditForm.querySelector('#description').innerHTML =
+            description
+          this.createEditForm.querySelector('#importance').value = importance
+          this.createEditForm
+            .querySelector('#due-date')
+            .setAttribute(
+              'value',
+              dueDate ? convertEpochToDateString(dueDate) : null
+            )
+          this.createEditForm.open()
+        })
       }
+    })
+  }
+
+  resetForm() {
+    this.createEditForm.querySelector('#title').setAttribute('value', '')
+    this.createEditForm.querySelector('#description').innerHTML = null
+    this.createEditForm.querySelector('#importance').value = ''
+    this.createEditForm.querySelector('#due-date').setAttribute('value', '')
+  }
+
+  addFormSubmitListenerAndAction() {
+    const title = document.getElementById('title')
+    const description = document.getElementById('description')
+    const importance = document.getElementById('importance')
+    const dueDate = document.getElementById('due-date')
+
+    const form = document.getElementById('form')
+    form.addEventListener('submit', (event) => {
+      event.preventDefault()
+
+      const message = `
+    Title: ${title.value}
+    Description: ${description.value}
+    Importance: ${importance.value}
+    Duedate: ${dueDate.value}
+  `
+      if (this.formSubmitMode === FormMode.CREATE) {
+        noteService
+          .addNote(
+            title.value,
+            description.value,
+            importance.value,
+            new Date(dueDate.value).getTime()
+          )
+          .then(() => {
+            console.log('note created!')
+            // TODO : close dialog and rerender note-list
+          })
+          .catch((err) => console.log(err))
+      } else {
+        noteService
+          .updateNote(
+            this.editNoteId,
+            title.value,
+            description.value,
+            importance.value,
+            new Date(dueDate.value).getTime()
+          )
+          .then(() => {
+            console.log('note saved!')
+            // TODO : close dialog and rerender note-list
+          })
+          .catch((err) => console.log(err))
+      }
+      console.log(message)
     })
   }
 
   initialize() {
     this.initEventHandlers()
-    this.showNotes()
+    this.showNotes().catch((err) => console.error(err))
   }
 }
 
