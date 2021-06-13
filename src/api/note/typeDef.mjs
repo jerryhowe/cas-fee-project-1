@@ -8,10 +8,11 @@ export const noteTypeDef = gql`
     title: String
     description: String
     importance: Int
-    creationDate: Date
+    dateCreated: Date
+    dateDeleted: Date
     dueDate: Date
     dateCompleted: Date
-    completed: Boolean
+    done: Boolean
     state: String
   }
 

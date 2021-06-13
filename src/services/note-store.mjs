@@ -7,6 +7,7 @@ export class NoteStore {
   }
 
   async add(title, description, importance, dueDate) {
+    console.log(dueDate)
     const note = new Note(title, description, importance, new Date(), dueDate)
     return this.db.insert(note)
   }
@@ -17,13 +18,16 @@ export class NoteStore {
   }
 
   async delete(id) {
-    await this.db.update({ _id: id }, { $set: { state: 'DELETED' } })
+    await this.db.update({ _id: id }, { $set: { dateDeleted: new Date() } })
     return this.get(id)
   }
 
   async markCompleted(id, completed) {
     const done = completed === undefined ? true : completed
-    await this.db.update({ _id: id }, { $set: { done } })
+    await this.db.update(
+      { _id: id },
+      { $set: { done, dateCompleted: done ? new Date() : null } }
+    )
     return this.get(id)
   }
 

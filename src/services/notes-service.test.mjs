@@ -16,11 +16,11 @@ describe('notes-services tests', () => {
     // try sort with no order param to see if it will be sorted into ascending order again
     expect(sortNotesByImportance(desc)[0].importance).toBe(2)
   })
-  it('should sort notes by creationDate', () => {
-    expect(sortNotesByCompletionDate(notes, 'DESC')[0].creationDate).toBe(
+  it('should sort notes by dateCreated', () => {
+    expect(sortNotesByCompletionDate(notes, 'DESC')[0].dateCreated).toBe(
       yesterday
     )
-    expect(sortNotesByCompletionDate(notes, 'ASC')[0].creationDate).toBe(today)
+    expect(sortNotesByCompletionDate(notes, 'ASC')[0].dateCreated).toBe(today)
   })
   it('should find note by id', () => {
     expect(findNoteById(notes, 1)).toBe(notes[0])

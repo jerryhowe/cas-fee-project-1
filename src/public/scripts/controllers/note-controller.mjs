@@ -26,9 +26,10 @@ class NotesController {
         title,
         description,
         importance,
-        creationDate,
+        dateCreated,
+        dateDeleted,
         dueDate,
-        completionDate,
+        dateCompleted,
         done,
       } = note
       return {
@@ -36,10 +37,11 @@ class NotesController {
         title,
         description,
         importance: '!'.repeat(importance),
-        creationDate: creationDate && convertToNearFutureString(creationDate),
+        dateCreated: dateCreated && convertToNearFutureString(dateCreated),
+        dateDeleted,
         dueDate: dueDate && convertToNearFutureString(dueDate),
-        completionDate:
-          completionDate && convertToNearFutureString(completionDate),
+        dateCompleted:
+          dateCompleted && convertToNearFutureString(dateCompleted),
         done,
       }
     })
@@ -62,17 +64,26 @@ class NotesController {
     const deleteConfirmationModal = document.querySelector(
       '#delete-confirmation-modal'
     )
-
+    deleteConfirmationModal.addEventListener('cancel', () => {
+      delete this.deleteNoteId
+    })
     deleteConfirmationModal.addEventListener('confirm', () => {
-      console.log('deleting note...')
+      noteService
+        .deleteNote(this.deleteNoteId)
+        .catch(console.error)
+        .finally(() => delete this.deleteNoteId)
+      this.showNotes().catch(console.error)
     })
 
     this.notesContainer.addEventListener('click', (event) => {
-      const { deleteNoteId, editNoteId } = event.target.dataset
-      // editNoteId && console.log(`EDIT CLICKED with ID ${editNoteId}`)
-      // deleteNoteId && console.log(`DELETE CLICKED with ID ${deleteNoteId}`)
-
+      const { deleteNoteId, editNoteId, doneNoteId } = event.target.dataset
+      if (doneNoteId) {
+        noteService
+          .markCompleted(doneNoteId, event.target.checked)
+          .catch(console.error)
+      }
       if (deleteNoteId) {
+        this.deleteNoteId = deleteNoteId
         deleteConfirmationModal.open()
       }
       if (editNoteId) {
@@ -134,8 +145,8 @@ class NotesController {
             new Date(dueDate.value).getTime()
           )
           .then(() => {
-            console.log('note created!')
-            // TODO : close dialog and rerender note-list
+            this.createEditForm.hide()
+            this.showNotes().catch(console.error)
           })
           .catch((err) => console.log(err))
       } else {
@@ -148,8 +159,8 @@ class NotesController {
             new Date(dueDate.value).getTime()
           )
           .then(() => {
-            console.log('note saved!')
-            // TODO : close dialog and rerender note-list
+            this.createEditForm.hide()
+            this.showNotes().catch(console.error)
           })
           .catch((err) => console.log(err))
       }
@@ -159,7 +170,7 @@ class NotesController {
 
   initialize() {
     this.initEventHandlers()
-    this.showNotes().catch((err) => console.error(err))
+    this.showNotes().catch(console.error)
   }
 }
 

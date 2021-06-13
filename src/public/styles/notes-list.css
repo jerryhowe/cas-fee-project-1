@@ -60,6 +60,15 @@
   border-radius: 5px;
 }
 
+.completed-button {
+  padding: 0.25rem 0.5rem;
+  background: #09bfb9ce;
+  color: white;
+  border: 2px solid #09bfb9ce;
+  cursor: pointer;
+  border-radius: 5px;
+}
+
 .fas {
   pointer-events: none;
 }

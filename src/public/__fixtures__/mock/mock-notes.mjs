@@ -14,7 +14,7 @@ export const notes = [
     importance: 5,
     dueDate: new Date('2021-05-20'),
     completionDate: new Date('2021-05-22'),
-    creationDate: today,
+    dateCreated: today,
     done: true,
   },
   {
@@ -24,7 +24,7 @@ export const notes = [
     importance: 2,
     dueDate: yesterday,
     completionDate: yesterday,
-    creationDate: yesterday,
+    dateCreated: yesterday,
     done: true,
   },
   {
@@ -34,7 +34,7 @@ export const notes = [
     importance: 3,
     dueDate: dayBeforeYesterday,
     completionDate: dayBeforeYesterday,
-    creationDate: dayBeforeYesterday,
+    dateCreated: dayBeforeYesterday,
     done: false,
   },
   {
@@ -44,7 +44,7 @@ export const notes = [
     importance: 4,
     dueDate: threeDaysAgo,
     completionDate: threeDaysAgo,
-    creationDate: threeDaysAgo,
+    dateCreated: threeDaysAgo,
     done: false,
   },
   {
@@ -54,7 +54,7 @@ export const notes = [
     importance: 5,
     dueDate: fourDaysAgo,
     completionDate: fourDaysAgo,
-    creationDate: fourDaysAgo,
+    dateCreated: fourDaysAgo,
     done: false,
   },
 ]

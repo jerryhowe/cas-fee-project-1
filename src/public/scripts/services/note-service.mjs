@@ -11,7 +11,6 @@ class NoteService {
                           _id
                       }
                     }`
-    console.log(query)
     return await graphqlService.ajax(query)
   }
 
@@ -25,7 +24,6 @@ class NoteService {
                           _id
                       }
                     }`
-    console.log(query)
     return await graphqlService.ajax(query)
   }
 
@@ -36,7 +34,11 @@ class NoteService {
                         title,
                         description,
                         importance,
-                        dueDate
+                        dateCompleted,
+                        dateDeleted,
+                        dateCreated,
+                        dueDate,
+                        done
                       }
                     }`
     return (await graphqlService.ajax(query)).Notes
@@ -48,21 +50,33 @@ class NoteService {
           title,
           description,
           importance,
-          creationDate,
+          dateCreated,
           dueDate,
           dateCompleted,
-          completed
+          done
         }
     }`
+    console.log(query)
     return (await graphqlService.ajax(query)).Note
   }
 
-  async markCompleted(id) {
-    const query = `{
-        Note(id: ${id}) {
+  async deleteNote(id) {
+    const query = `mutation {
+        deleteNote(id: "${id}") {
           _id
         }
     }`
+    console.log(query)
+    return await graphqlService.ajax(query)
+  }
+
+  async markCompleted(id, completed) {
+    const query = `mutation {
+        markCompleted(id: "${id}", completed: ${completed}) {
+          _id
+        }
+    }`
+    console.log(query)
     return await graphqlService.ajax(query)
   }
 }

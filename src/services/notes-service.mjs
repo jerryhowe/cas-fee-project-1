@@ -17,8 +17,8 @@ export function sortNotesByImportance(notes, order) {
   return compareNotesBy(notes, 'importance', order)
 }
 
-export function sortNotesByCreationDate(notes, order) {
-  return compareNotesBy(notes, 'creationDate', order)
+export function sortNotesBydateCreated(notes, order) {
+  return compareNotesBy(notes, 'dateCreated', order)
 }
 
 export function sortNotesByCompletionDate(notes, order) {
