@@ -5,6 +5,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="../styles/navbar.css">
   <link rel="stylesheet" href="../styles/notes-list.css">
+  <link rel="stylesheet" href="../styles/switch.css">
+  <link rel="stylesheet" href="../styles/form.css">
   <script src="../scripts/libs/handlebars-v4.7.7.js" defer></script>
   <script src="../scripts/utils/handlebars-helpers.js" defer></script>
   <script src="../scripts/navbar.js"></script>
@@ -55,10 +57,10 @@
   <a href="#" class="tablinks" onclick="openTab(event, 'byDueDate')">By Due Date</a>
   <a href="#" class="tablinks" onclick="openTab(event, 'byDateCreated')">By Date Created</a>
   <a href="#" class="tablinks" onclick="openTab(event, 'byImportance')">By Importance</a>
-  <span class="lightmode-darkmode">
-        <i class="fas fa-sun" onclick="toggleLightModeDarkMode(false)"></i> /
-        <i class="fas fa-moon" onclick="toggleLightModeDarkMode(true)"></i>
-    </span>
+  <span class="lightmode-darkmode" id="theme-button">
+      <i class="fas fa-sun" onclick="toggleLightModeDarkMode(false)"></i> /
+      <i class="fas fa-moon" onclick="toggleLightModeDarkMode(true)"></i>
+  </span>
   <a href="javascript:void(0);" class="icon" onclick="openMenu()">
     <i class="fa fa-bars"></i>
   </a>
@@ -66,8 +68,12 @@
 <div id="allNotes" class="tabcontent default">
   <div class="all-notes-title">
     <h2>All Notes</h2>
-    <div>
-      <button id="show-completed-button" class="completed-button">Show Completed</button>
+    <div class="controls">
+      Show Completed
+      <label class="toggle">
+        <input id="show-completed-toggle" type="checkbox" checked>
+        <span class="slider round"></span>
+      </label>
       <button id="create-note-button" class="create-button">
         <i class="fas fa-plus"></i>
       </button>
@@ -100,7 +106,7 @@
 
 <custom-modal id="create-edit-modal" hideActionButtons>
   <h1 slot="title">Create/ Edit Note</h1>
-  <form class="form" id="form">
+  <form class="create-edit" id="form">
     <label for="title">Title</label>
     <input
       required

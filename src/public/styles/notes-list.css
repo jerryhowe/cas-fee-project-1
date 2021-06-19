@@ -131,3 +131,12 @@
   font-weight: bold;
   color: red;
 }
+
+.controls {
+  display: flex;
+  align-items: center;
+}
+
+.control * {
+  margin: 0 5px;
+}

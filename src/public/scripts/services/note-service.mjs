@@ -44,6 +44,10 @@ class NoteService {
     return (await graphqlService.ajax(query)).Notes
   }
 
+  async getNotesNotCompleted() {
+    return (await this.getNotes()).filter((note) => note.done !== true)
+  }
+
   async getNote(id) {
     const query = `{
         Note(id: "${id}") {
@@ -56,7 +60,6 @@ class NoteService {
           done
         }
     }`
-    console.log(query)
     return (await graphqlService.ajax(query)).Note
   }
 
@@ -66,7 +69,6 @@ class NoteService {
           _id
         }
     }`
-    console.log(query)
     return await graphqlService.ajax(query)
   }
 
@@ -76,8 +78,33 @@ class NoteService {
           _id
         }
     }`
-    console.log(query)
     return await graphqlService.ajax(query)
+  }
+
+  async compareNotesBy(notes, property, order) {
+    return notes
+      .slice()
+      .sort((n1, n2) =>
+        order === 'DESC'
+          ? n2[property] - n1[property]
+          : n1[property] - n2[property]
+      )
+  }
+
+  async sortNotesByImportance(notes, order) {
+    return this.compareNotesBy(await this.getNotes(), 'importance', order)
+  }
+
+  async sortNotesBydateCreated(notes, order) {
+    return this.compareNotesBy(await this.getNotes(), 'dateCreated', order)
+  }
+
+  async sortNotesByCompletionDate(notes, order) {
+    return this.compareNotesBy(await this.getNotes(), 'completionDate', order)
+  }
+
+  async sortNotesByDueDate(notes, order) {
+    return this.compareNotesBy(await this.getNotes(), 'dueDate', order)
   }
 }
 

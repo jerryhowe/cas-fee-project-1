@@ -10,8 +10,8 @@ function openMenu() {
 
 // eslint-disable-next-line no-unused-vars
 function openTab(evt, tabName) {
-  console.log(evt)
-  console.log(tabName)
+  // console.log(evt)
+  // console.log(tabName)
   const tabContent = document.getElementsByClassName('tabcontent')
   for (let i = 0; i < tabContent.length; i++) {
     tabContent[i].style.display = 'none'
@@ -30,3 +30,9 @@ function toggleLightModeDarkMode(turnDark) {
   console.log(`turning ${turnDark ? 'dark' : 'light'}...`)
   console.log('to be implemented...')
 }
+
+// const themeButton = document.getElementById('theme-button')
+// themeButton.addEventListener('click', () => {
+//   console.log('turning dark...')
+//   document.body.classList.toggle('dark-theme')
+// })

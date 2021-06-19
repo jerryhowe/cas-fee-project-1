@@ -13,13 +13,17 @@ class NotesController {
     this.noteTemplateCompiled = Handlebars.compile(
       document.getElementById('notes-list-template').innerHTML
     )
-    this.notesContainer = document.getElementById('notes-container')
+    this.showCompleted = document.querySelector(
+      '#show-completed-toggle'
+    ).checked
+    this.notesContainer = document.querySelector('#notes-container')
     this.createEditForm = document.querySelector('#create-edit-modal')
   }
 
   async showNotes() {
-    const notes = await noteService.getNotes()
-    console.log(notes)
+    const notes = this.showCompleted
+      ? await noteService.getNotes()
+      : await noteService.getNotesNotCompleted()
     const parsedNotes = notes.map((note) => {
       const {
         _id,
@@ -45,7 +49,7 @@ class NotesController {
         done,
       }
     })
-    console.log(parsedNotes)
+
     this.notesContainer.innerHTML = this.noteTemplateCompiled({
       parsedNotes,
     })
@@ -53,6 +57,8 @@ class NotesController {
 
   initEventHandlers() {
     const createNoteButton = document.querySelector('#create-note-button')
+    const showCompletedToggle = document.querySelector('#show-completed-toggle')
+
     this.addFormSubmitListenerAndAction()
     createNoteButton.addEventListener('click', () => {
       this.formSubmitMode = FormMode.CREATE
@@ -61,6 +67,12 @@ class NotesController {
       this.resetForm()
       this.createEditForm.open()
     })
+
+    showCompletedToggle.addEventListener('click', (event) => {
+      this.showCompleted = event.target.checked
+      this.showNotes().catch(console.error)
+    })
+
     const deleteConfirmationModal = document.querySelector(
       '#delete-confirmation-modal'
     )
@@ -81,6 +93,7 @@ class NotesController {
         noteService
           .markCompleted(doneNoteId, event.target.checked)
           .catch(console.error)
+        this.showNotes()
       }
       if (deleteNoteId) {
         this.deleteNoteId = deleteNoteId
@@ -111,6 +124,10 @@ class NotesController {
         })
       }
     })
+
+    document.querySelector('#byImportance').addEventListener('click', () => {
+      console.log('sorting by importance')
+    })
   }
 
   resetForm() {
@@ -130,12 +147,6 @@ class NotesController {
     form.addEventListener('submit', (event) => {
       event.preventDefault()
 
-      const message = `
-    Title: ${title.value}
-    Description: ${description.value}
-    Importance: ${importance.value}
-    Duedate: ${dueDate.value}
-  `
       if (this.formSubmitMode === FormMode.CREATE) {
         noteService
           .addNote(
@@ -164,7 +175,6 @@ class NotesController {
           })
           .catch((err) => console.log(err))
       }
-      console.log(message)
     })
   }
 

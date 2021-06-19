@@ -1,6 +1,5 @@
 export class Note {
   constructor(
-    // id,
     title,
     description,
     importance,
@@ -9,7 +8,6 @@ export class Note {
     completionDate,
     done
   ) {
-    // this.id = id
     this.title = title
     this.description = description
     this.importance = importance
