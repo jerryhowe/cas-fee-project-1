@@ -23,10 +23,11 @@
         {{#each parsedNotes}}
           {{#if (isnull dateDeleted)}}
             <li>
-              <label class="note-child-done">
-                <input type="checkbox" name="checkbox" data-done-note-id="{{id}}" {{#if done}}checked{{/if}}>Done {{#if
-                done}}
-                [{{dateCompleted}}]{{/if}}
+              <label class="container note-child-done">
+                <input type="checkbox" name="checkbox" data-done-note-id="{{id}}" {{#if done}}checked{{/if}}>
+                Done {{#if done}}
+                <br>[{{dateCompleted}}]{{/if}}
+                <span class="checkmark"></span>
               </label>
               <div class="note-child-title-desc title-desc">
                 <header>
@@ -35,13 +36,13 @@
                 <textarea readonly resizable="false">{{description}}</textarea>
               </div>
               <span class="note-child-edit-delete">
-                                <button class="edit-button" data-edit-note-id="{{id}}">
-                                    <i class="fas fa-edit"></i>
-                                </button>
-                                <button class="delete-button" data-delete-note-id={{id}}>
-                                    <i class="fas fa-trash-alt"></i>
-                                </button>
-                            </span>
+                  <button class="btn edit-button" data-edit-note-id="{{id}}">
+                      <i class="fas fa-edit"></i>
+                  </button>
+                  <button class="btn delete-button" data-delete-note-id={{id}}>
+                      <i class="fas fa-trash-alt"></i>
+                  </button>
+              </span>
             </li>
           {{/if}}
         {{/each}}
@@ -57,9 +58,10 @@
   <a href="#" class="tablinks" onclick="openTab(event, 'byDueDate')">By Due Date</a>
   <a href="#" class="tablinks" onclick="openTab(event, 'byDateCreated')">By Date Created</a>
   <a href="#" class="tablinks" onclick="openTab(event, 'byImportance')">By Importance</a>
-  <span class="lightmode-darkmode" id="theme-button">
-      <i class="fas fa-sun" onclick="toggleLightModeDarkMode(false)"></i> /
-      <i class="fas fa-moon" onclick="toggleLightModeDarkMode(true)"></i>
+  <span class="lightmode-darkmode">
+    <button id="theme-button">
+      <i class="fas fa-moon" ></i>
+    </button>
   </span>
   <a href="javascript:void(0);" class="icon" onclick="openMenu()">
     <i class="fa fa-bars"></i>
@@ -69,12 +71,12 @@
   <div class="all-notes-title">
     <h2>All Notes</h2>
     <div class="controls">
-      Show Completed
+      <b>Show Completed</b>
       <label class="toggle">
         <input id="show-completed-toggle" type="checkbox" checked>
         <span class="slider round"></span>
       </label>
-      <button id="create-note-button" class="create-button">
+      <button id="create-note-button" class="btn create-button">
         <i class="fas fa-plus"></i>
       </button>
     </div>
@@ -115,9 +117,7 @@
       id="title"
     />
     <label for="description">Description</label>
-    <textarea
-      id="description"
-    ></textarea>
+    <textarea id="description"></textarea>
     <label for="importance">Importance</label>
     <select id="importance">
       <option value="1">1 - Not Important At All</option>

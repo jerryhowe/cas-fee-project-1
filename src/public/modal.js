@@ -47,6 +47,8 @@ class Modal extends HTMLElement {
             header {
                 padding: 1rem;
                 border-bottom: 1px solid #ccc;
+                display: flex;
+                justify-content: space-between;
             }
 
             ::slotted(h1) {
@@ -68,19 +70,35 @@ class Modal extends HTMLElement {
             #actions button {
                 margin: 0 0.25rem;
             }
-            
+            .btn {
+              background-color: #ff5a85;
+              padding: 10px 14px;
+              border: none;
+              color: #fff;
+              cursor: pointer;
+              border-radius: 5px;
+            }
+             #close-btn {
+              background-color: #ff1e80;
+              padding: 5px 10px;
+              font-size: 12px;
+            }
+             #confirm-btn {
+              background-color: #04aa6d;
+            }
         </style>
         <div id="backdrop"></div>
         <div id="modal">
             <header>
-                <slot name="title">Default Title</slot>
+                  <slot name="title">Default Title</slot>
+                  <button class="btn" id="close-btn">X</button>
             </header>
             <section id="main">
                 <slot></slot>
             </section>
             <section id="actions">
-                <button id="cancel-btn">Cancel</button>
-                <button id="confirm-btn">Okay</button>
+                <button class="btn" id="cancel-btn">Cancel</button>
+                <button class="btn" id="confirm-btn">Okay</button>
             </section>
         </div>
     `
@@ -91,8 +109,10 @@ class Modal extends HTMLElement {
     const backdrop = this.shadowRoot.querySelector('#backdrop')
     const cancelButton = this.shadowRoot.querySelector('#cancel-btn')
     const confirmButton = this.shadowRoot.querySelector('#confirm-btn')
+    const close = this.shadowRoot.querySelector('#close-btn')
     backdrop.addEventListener('click', this.cancel.bind(this))
     cancelButton.addEventListener('click', this.cancel.bind(this))
+    close.addEventListener('click', this.cancel.bind(this))
     confirmButton.addEventListener('click', this.confirm.bind(this))
   }
 
@@ -105,6 +125,8 @@ class Modal extends HTMLElement {
     if (this.hasAttribute('hideActionButtons')) {
       this.shadowRoot.querySelector('#actions').style.display = 'none'
       // this.hideActionButtons = true
+    } else {
+      this.shadowRoot.querySelector('#close-btn').style.display = 'none'
     }
   }
 

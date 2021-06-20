@@ -5,7 +5,7 @@ class NoteService {
     const query = `mutation {
                     addNote(input: {
                         title: "${title}",
-                        description: "${description}",
+                        description: """${description}""",
                         importance: ${importance},
                         dueDate: ${dueDate}}) {
                           _id
@@ -18,7 +18,7 @@ class NoteService {
     const query = `mutation {
                     updateNote(id: "${id}", input: {
                         title: "${title}",
-                        description: "${description}",
+                        description: """${description}""",
                         importance: ${importance},
                         dueDate: ${dueDate}}) {
                           _id

@@ -18,6 +18,7 @@ class NotesController {
     ).checked
     this.notesContainer = document.querySelector('#notes-container')
     this.createEditForm = document.querySelector('#create-edit-modal')
+    this.themeButton = document.querySelector('#theme-button')
   }
 
   async showNotes() {
@@ -100,6 +101,7 @@ class NotesController {
         deleteConfirmationModal.open()
       }
       if (editNoteId) {
+        console.log(editNoteId)
         this.editNoteId = editNoteId
         this.createEditForm.querySelector('h1').innerHTML = 'Edit Note'
         this.createEditForm.querySelector('button').innerHTML = 'Save Note'
@@ -108,6 +110,9 @@ class NotesController {
           const { title, description, importance, dueDate } = note
           // console.log(dueDate)
           // console.log(convertEpochToDateString(dueDate))
+          // debugger
+          console.log(description)
+          console.log(dueDate)
           this.createEditForm
             .querySelector('#title')
             .setAttribute('value', title)
@@ -174,12 +179,31 @@ class NotesController {
             this.showNotes().catch(console.error)
           })
           .catch((err) => console.log(err))
+          .finally(() => {
+            delete this.editNoteId
+          })
       }
+    })
+  }
+
+  initializeThemeButton() {
+    this.themeButton.addEventListener('click', () => {
+      const isLight = this.themeButton
+        .querySelector('i')
+        .classList.contains('fa-sun')
+      document.body.classList.toggle('dark-theme')
+      this.themeButton
+        .querySelector('i')
+        .classList.add(isLight ? 'fa-moon' : 'fa-sun')
+      this.themeButton
+        .querySelector('i')
+        .classList.remove(isLight ? 'fa-sun' : 'fa-moon')
     })
   }
 
   initialize() {
     this.initEventHandlers()
+    this.initializeThemeButton()
     this.showNotes().catch(console.error)
   }
 }
