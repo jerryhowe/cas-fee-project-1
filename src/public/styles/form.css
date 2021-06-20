@@ -1,11 +1,12 @@
 form body {
-  font-family: Arial, sans-serif;
+  font-family: "Comic Sans MS", sans-serif;
 }
 
 form input[type=text],
 form input[type=date],
 form textarea,
 form select {
+  font-family: "Comic Sans MS", sans-serif;
   width: 100%;
   padding: 12px 20px;
   margin: 8px 0;
@@ -16,6 +17,7 @@ form select {
 }
 
 form textarea {
+  font-family: "Comic Sans MS", sans-serif;
   height: 100px;
   resize: none;
 }
@@ -37,6 +39,6 @@ form button[type=submit]:hover {
 
 form.create-edit {
   border-radius: 5px;
-  background-color: #f2f2f2;
+  background-color: var(--background);
   padding: 20px;
 }

@@ -41,7 +41,8 @@ class Modal extends HTMLElement {
                 justify-content: space-between;
                 opacity: 0;
                 pointer-events: none;
-                transition: all 0.3s ease-out;
+                color: var(--color);
+                background: var(--background);
             }
 
             header {
@@ -117,11 +118,7 @@ class Modal extends HTMLElement {
   }
 
   attributeChangedCallback() {
-    if (this.hasAttribute('opened')) {
-      this.isOpen = true
-    } else {
-      this.isOpen = false
-    }
+    this.isOpen = this.hasAttribute('opened')
     if (this.hasAttribute('hideActionButtons')) {
       this.shadowRoot.querySelector('#actions').style.display = 'none'
       // this.hideActionButtons = true

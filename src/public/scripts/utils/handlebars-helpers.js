@@ -1,4 +1,2 @@
 // eslint-disable-next-line no-undef
-Handlebars.registerHelper('isnull', (value) => {
-  return value === null
-})
+Handlebars.registerHelper('isnull', (value) => value === null)

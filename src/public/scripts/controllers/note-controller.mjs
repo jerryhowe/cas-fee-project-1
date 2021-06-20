@@ -18,7 +18,6 @@ class NotesController {
     ).checked
     this.notesContainer = document.querySelector('#notes-container')
     this.createEditForm = document.querySelector('#create-edit-modal')
-    this.themeButton = document.querySelector('#theme-button')
   }
 
   async showNotes() {
@@ -56,7 +55,59 @@ class NotesController {
     })
   }
 
+  async showNotesSortBy(columnName) {
+    const notes = this.showCompleted
+      ? await noteService.getNotes()
+      : await noteService.getNotesNotCompleted()
+    const notesByImportance = await noteService.compareNotesBy(
+      notes,
+      columnName,
+      'DESC'
+    )
+    const parsedNotes = notesByImportance.map((note) => {
+      const {
+        _id,
+        title,
+        description,
+        importance,
+        dateCreated,
+        dateDeleted,
+        dueDate,
+        dateCompleted,
+        done,
+      } = note
+      return {
+        id: _id,
+        title,
+        description,
+        importance: '!'.repeat(importance),
+        dateCreated: dateCreated && convertToNearFutureString(dateCreated),
+        dateDeleted,
+        dueDate: dueDate && convertToNearFutureString(dueDate),
+        dateCompleted:
+          dateCompleted && convertToNearFutureString(dateCompleted),
+        done,
+      }
+    })
+
+    this.notesContainer.innerHTML = this.noteTemplateCompiled({
+      parsedNotes,
+    })
+  }
+
   initEventHandlers() {
+    document.querySelector('#navbar').addEventListener('click', (event) => {
+      const { sortBy } = event.target.dataset
+      if (sortBy) {
+        document
+          .querySelector('#navbar')
+          .querySelectorAll('a')
+          .forEach((htmlElement) => htmlElement.classList.remove('active'))
+        event.target.classList.add('active')
+        this.showNotesSortBy(sortBy).catch(console.error)
+      }
+    })
+
     const createNoteButton = document.querySelector('#create-note-button')
     const showCompletedToggle = document.querySelector('#show-completed-toggle')
 
@@ -101,18 +152,13 @@ class NotesController {
         deleteConfirmationModal.open()
       }
       if (editNoteId) {
-        console.log(editNoteId)
+        // console.log(editNoteId)
         this.editNoteId = editNoteId
         this.createEditForm.querySelector('h1').innerHTML = 'Edit Note'
         this.createEditForm.querySelector('button').innerHTML = 'Save Note'
         noteService.getNote(editNoteId).then((note) => {
           this.formSubmitMode = FormMode.EDIT
           const { title, description, importance, dueDate } = note
-          // console.log(dueDate)
-          // console.log(convertEpochToDateString(dueDate))
-          // debugger
-          console.log(description)
-          console.log(dueDate)
           this.createEditForm
             .querySelector('#title')
             .setAttribute('value', title)
@@ -128,10 +174,6 @@ class NotesController {
           this.createEditForm.open()
         })
       }
-    })
-
-    document.querySelector('#byImportance').addEventListener('click', () => {
-      console.log('sorting by importance')
     })
   }
 
@@ -186,24 +228,8 @@ class NotesController {
     })
   }
 
-  initializeThemeButton() {
-    this.themeButton.addEventListener('click', () => {
-      const isLight = this.themeButton
-        .querySelector('i')
-        .classList.contains('fa-sun')
-      document.body.classList.toggle('dark-theme')
-      this.themeButton
-        .querySelector('i')
-        .classList.add(isLight ? 'fa-moon' : 'fa-sun')
-      this.themeButton
-        .querySelector('i')
-        .classList.remove(isLight ? 'fa-sun' : 'fa-moon')
-    })
-  }
-
   initialize() {
     this.initEventHandlers()
-    this.initializeThemeButton()
     this.showNotes().catch(console.error)
   }
 }

@@ -1,84 +1,46 @@
-body {
-  margin: 0;
-  font-family: Arial, Helvetica, sans-serif;
+.navbar {
+  width: 100%;
+  background-color: #555;
+  overflow: auto;
+  display: flex;
+  justify-content: space-evenly;
+  margin-bottom: 20px;
 }
 
-.topnav {
-  overflow: hidden;
-  background-color: #333;
-}
-
-.topnav a {
-  float: left;
-  display: block;
-  color: #f2f2f2;
-  text-align: center;
-  padding: 14px 16px;
+.navbar a {
+  padding: 12px;
+  color: white;
   text-decoration: none;
   font-size: 17px;
-}
-
-.topnav a:hover {
-  background-color: #ddd;
-  color: black;
-}
-
-.topnav a.active {
-  background-color: #04aa6d;
-  color: white;
-}
-
-.topnav .icon {
-  display: none;
-}
-
-.topnav .lightmode-darkmode {
-  color: #f2f2f2;
-  float: right;
-  display: block;
+  width: 20%; /* Four links of equal widths */
   text-align: center;
-  vertical-align: center;
-  padding: 1rem;
-  cursor: pointer;
 }
 
-@media screen and (max-width: 600px) {
-  .topnav a:not(:first-child) {
-    display: none;
-  }
-
-  .topnav a.icon {
-    float: right;
-    display: block;
-  }
+.navbar a:hover {
+  background-color: #000;
 }
 
-@media screen and (max-width: 600px) {
-  .topnav.responsive {
-    position: relative;
-  }
+.navbar a.active {
+  background-color: #04aa6d;
+}
 
-  .topnav.responsive .icon {
-    position: absolute;
-    right: 0;
-    top: 0;
-  }
-
-  .topnav.responsive a {
-    float: none;
+@media screen and (max-width: 500px) {
+  .navbar a {
     display: block;
+    width: 100%;
     text-align: left;
   }
 }
 
-/* Style the tab content */
-div[class*="tabcontent"] {
-  display: none;
-  padding: 0 10%;
-  border: 1px solid #ccc;
-  border-top: none;
+#theme-button {
+  background-color: transparent; /* Green */
+  border: none;
+  color: yellow;
+  text-align: center;
+  text-decoration: none;
+  cursor: pointer;
 }
 
-div[class*="tabcontent default"] {
-  display: block;
+#theme-button:hover {
+  background-color: #000;
 }

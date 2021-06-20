@@ -91,20 +91,20 @@ class NoteService {
       )
   }
 
-  async sortNotesByImportance(notes, order) {
-    return this.compareNotesBy(await this.getNotes(), 'importance', order)
+  sortNotesByImportance(notes, order) {
+    return this.compareNotesBy(notes, 'importance', order)
   }
 
-  async sortNotesBydateCreated(notes, order) {
-    return this.compareNotesBy(await this.getNotes(), 'dateCreated', order)
+  sortNotesBydateCreated(notes, order) {
+    return this.compareNotesBy(notes, 'dateCreated', order)
   }
 
-  async sortNotesByCompletionDate(notes, order) {
-    return this.compareNotesBy(await this.getNotes(), 'completionDate', order)
+  sortNotesByCompletionDate(notes, order) {
+    return this.compareNotesBy(notes, 'completionDate', order)
   }
 
-  async sortNotesByDueDate(notes, order) {
-    return this.compareNotesBy(await this.getNotes(), 'dueDate', order)
+  sortNotesByDueDate(notes, order) {
+    return this.compareNotesBy(notes, 'dueDate', order)
   }
 }
 
