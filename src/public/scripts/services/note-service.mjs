@@ -85,7 +85,7 @@ class NoteService {
     return notes
       .slice()
       .sort((n1, n2) =>
-        order === 'DESC'
+        order.toUpperCase() === 'DESC'
           ? n2[property] - n1[property]
           : n1[property] - n2[property]
       )

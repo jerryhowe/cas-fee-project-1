@@ -3,6 +3,7 @@ import {
   convertToNearFutureString,
 } from '../utils/date-util.mjs'
 import { noteService } from '../services/note-service.mjs'
+import { valueStorage } from '../services/value-storage.js'
 
 const FormMode = Object.freeze({ CREATE: 1, EDIT: 2 })
 
@@ -20,51 +21,18 @@ class NotesController {
     this.createEditForm = document.querySelector('#create-edit-modal')
   }
 
-  async showNotes() {
-    const notes = this.showCompleted
+  async sortNotesBy(columnName) {
+    let notes = this.showCompleted
       ? await noteService.getNotes()
       : await noteService.getNotesNotCompleted()
+    if (columnName && columnName !== 'none') {
+      notes = await noteService.compareNotesBy(
+        notes,
+        columnName,
+        valueStorage.getItem(columnName)
+      )
+    }
     const parsedNotes = notes.map((note) => {
-      const {
-        _id,
-        title,
-        description,
-        importance,
-        dateCreated,
-        dateDeleted,
-        dueDate,
-        dateCompleted,
-        done,
-      } = note
-      return {
-        id: _id,
-        title,
-        description,
-        importance: '!'.repeat(importance),
-        dateCreated: dateCreated && convertToNearFutureString(dateCreated),
-        dateDeleted,
-        dueDate: dueDate && convertToNearFutureString(dueDate),
-        dateCompleted:
-          dateCompleted && convertToNearFutureString(dateCompleted),
-        done,
-      }
-    })
-
-    this.notesContainer.innerHTML = this.noteTemplateCompiled({
-      parsedNotes,
-    })
-  }
-
-  async showNotesSortBy(columnName) {
-    const notes = this.showCompleted
-      ? await noteService.getNotes()
-      : await noteService.getNotesNotCompleted()
-    const notesByImportance = await noteService.compareNotesBy(
-      notes,
-      columnName,
-      'DESC'
-    )
-    const parsedNotes = notesByImportance.map((note) => {
       const {
         _id,
         title,
@@ -102,9 +70,26 @@ class NotesController {
         document
           .querySelector('#navbar')
           .querySelectorAll('a')
-          .forEach((htmlElement) => htmlElement.classList.remove('active'))
+          .forEach((htmlElement) => {
+            if (htmlElement.dataset.sortBy !== sortBy) {
+              htmlElement.classList.remove('active')
+              // console.log(htmlElement.dataset.sortBy)
+              // console.log(sortBy)
+              valueStorage.setItem(htmlElement.dataset.sortBy)
+            } else if (htmlElement.childNodes.length === 2) {
+              htmlElement.removeChild(htmlElement.lastChild)
+            }
+          })
         event.target.classList.add('active')
-        this.showNotesSortBy(sortBy).catch(console.error)
+        const sortOrder = valueStorage.getItem(sortBy) || 'desc'
+        valueStorage.setItem(sortBy, sortOrder === 'desc' ? 'asc' : 'desc')
+        event.target.insertAdjacentHTML(
+          'beforeend',
+          `<i class="fas fa-caret-${sortOrder === 'desc' ? 'up' : 'down'}"></i>`
+        )
+
+        // console.dir(event.target)
+        this.sortNotesBy(sortBy).catch(console.error)
       }
     })
 
@@ -122,7 +107,7 @@ class NotesController {
 
     showCompletedToggle.addEventListener('click', (event) => {
       this.showCompleted = event.target.checked
-      this.showNotes().catch(console.error)
+      this.sortNotesBy().catch(console.error)
     })
 
     const deleteConfirmationModal = document.querySelector(
@@ -136,7 +121,7 @@ class NotesController {
         .deleteNote(this.deleteNoteId)
         .catch(console.error)
         .finally(() => delete this.deleteNoteId)
-      this.showNotes().catch(console.error)
+      this.sortNotesBy().catch(console.error)
     })
 
     this.notesContainer.addEventListener('click', (event) => {
@@ -145,14 +130,13 @@ class NotesController {
         noteService
           .markCompleted(doneNoteId, event.target.checked)
           .catch(console.error)
-        this.showNotes()
+        this.sortNotesBy().catch(console.error)
       }
       if (deleteNoteId) {
         this.deleteNoteId = deleteNoteId
         deleteConfirmationModal.open()
       }
       if (editNoteId) {
-        // console.log(editNoteId)
         this.editNoteId = editNoteId
         this.createEditForm.querySelector('h1').innerHTML = 'Edit Note'
         this.createEditForm.querySelector('button').innerHTML = 'Save Note'
@@ -162,6 +146,7 @@ class NotesController {
           this.createEditForm
             .querySelector('#title')
             .setAttribute('value', title)
+          this.createEditForm.querySelector('#description').value = description
           this.createEditForm.querySelector('#description').innerHTML =
             description
           this.createEditForm.querySelector('#importance').value = importance
@@ -169,7 +154,7 @@ class NotesController {
             .querySelector('#due-date')
             .setAttribute(
               'value',
-              dueDate ? convertEpochToDateString(dueDate) : null
+              dueDate ? convertEpochToDateString(dueDate) : ''
             )
           this.createEditForm.open()
         })
@@ -203,8 +188,9 @@ class NotesController {
             new Date(dueDate.value).getTime()
           )
           .then(() => {
+            this.resetForm()
             this.createEditForm.hide()
-            this.showNotes().catch(console.error)
+            this.sortNotesBy().catch(console.error)
           })
           .catch((err) => console.log(err))
       } else {
@@ -217,8 +203,9 @@ class NotesController {
             new Date(dueDate.value).getTime()
           )
           .then(() => {
+            this.resetForm()
             this.createEditForm.hide()
-            this.showNotes().catch(console.error)
+            this.sortNotesBy().catch(console.error)
           })
           .catch((err) => console.log(err))
           .finally(() => {
@@ -230,7 +217,7 @@ class NotesController {
 
   initialize() {
     this.initEventHandlers()
-    this.showNotes().catch(console.error)
+    this.sortNotesBy().catch(console.error)
   }
 }
 

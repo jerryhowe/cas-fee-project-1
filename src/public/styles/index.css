@@ -73,7 +73,6 @@ body {
 .note-child-title-desc textarea {
   resize: none;
   height: 75px;
-  margin-top: 0;
   border-radius: 5px;
   font-family: "Comic Sans MS", sans-serif;
 }
