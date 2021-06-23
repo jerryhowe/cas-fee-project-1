@@ -165,6 +165,7 @@ class NotesController {
   resetForm() {
     this.createEditForm.querySelector('#title').setAttribute('value', '')
     this.createEditForm.querySelector('#description').innerHTML = null
+    this.createEditForm.querySelector('#description').value = ''
     this.createEditForm.querySelector('#importance').value = ''
     this.createEditForm.querySelector('#due-date').setAttribute('value', '')
   }
