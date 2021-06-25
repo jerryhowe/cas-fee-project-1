@@ -19,10 +19,15 @@ class NotesController {
     ).checked
     this.notesContainer = document.querySelector('#notes-container')
     this.createEditForm = document.querySelector('#create-edit-modal')
+    if (valueStorage.getItem('showCompleted')) {
+      document
+        .querySelector('#show-completed-toggle')
+        .setAttribute('checked', '')
+    }
   }
 
   async sortNotesBy(columnName) {
-    let notes = this.showCompleted
+    let notes = valueStorage.getItem('showCompleted')
       ? await noteService.getNotes()
       : await noteService.getNotesNotCompleted()
     if (columnName && columnName !== 'none') {
@@ -107,6 +112,7 @@ class NotesController {
 
     showCompletedToggle.addEventListener('click', (event) => {
       this.showCompleted = event.target.checked
+      valueStorage.setItem('showCompleted', event.target.checked)
       this.sortNotesBy().catch(console.error)
     })
 
