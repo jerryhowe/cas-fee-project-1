@@ -24,6 +24,7 @@ body {
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
+  margin: 0 30px;
 }
 
 .notes-list ul li {
@@ -32,6 +33,7 @@ body {
   justify-content: space-between;
   align-items: center;
   list-style: none;
+  margin: 0 30px;
 }
 
 [class^="note-child"] {
