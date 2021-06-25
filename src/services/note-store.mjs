@@ -13,7 +13,6 @@ export class NoteStore {
   }
 
   async add(title, description, importance, dueDate) {
-    // console.log(dueDate)
     const note = new Note(title, description, importance, new Date(), dueDate)
     return this.db.insert(note)
   }

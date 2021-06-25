@@ -79,8 +79,6 @@ class NotesController {
           .forEach((htmlElement) => {
             if (htmlElement.dataset.sortBy !== sortBy) {
               htmlElement.classList.remove('active')
-              // console.log(htmlElement.dataset.sortBy)
-              // console.log(sortBy)
               valueStorage.setItem(htmlElement.dataset.sortBy)
             } else if (htmlElement.childNodes.length === 2) {
               htmlElement.removeChild(htmlElement.lastChild)
@@ -93,8 +91,6 @@ class NotesController {
           'beforeend',
           `<i class="fas fa-caret-${sortOrder === 'desc' ? 'up' : 'down'}"></i>`
         )
-
-        // console.dir(event.target)
         this.sortNotesBy(sortBy).catch(console.error)
       }
     })
