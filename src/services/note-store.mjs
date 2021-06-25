@@ -1,9 +1,15 @@
 import datastore from 'nedb-promise'
+import dotenv from 'dotenv'
 import { Note } from './note.mjs'
+
+dotenv.config()
 
 export class NoteStore {
   constructor() {
-    this.db = datastore({ filename: './data/notes.db', autoload: true })
+    this.db = datastore({
+      filename: process.env.TEST_DATA || './data/notes.db',
+      autoload: true,
+    })
   }
 
   async add(title, description, importance, dueDate) {

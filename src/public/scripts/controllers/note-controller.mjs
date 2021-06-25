@@ -6,6 +6,7 @@ import { noteService } from '../services/note-service.mjs'
 import { valueStorage } from '../services/value-storage.js'
 
 const FormMode = Object.freeze({ CREATE: 1, EDIT: 2 })
+const DEFAULT_IMPORTANCE = 3
 
 class NotesController {
   constructor() {
@@ -149,19 +150,15 @@ class NotesController {
         noteService.getNote(editNoteId).then((note) => {
           this.formSubmitMode = FormMode.EDIT
           const { title, description, importance, dueDate } = note
-          this.createEditForm
-            .querySelector('#title')
-            .setAttribute('value', title)
+          this.createEditForm.querySelector('#title').value = title
           this.createEditForm.querySelector('#description').value = description
           this.createEditForm.querySelector('#description').innerHTML =
             description
           this.createEditForm.querySelector('#importance').value = importance
-          this.createEditForm
-            .querySelector('#due-date')
-            .setAttribute(
-              'value',
-              dueDate ? convertEpochToDateString(dueDate) : ''
-            )
+          this.createEditForm.querySelector('#due-date').value = dueDate
+            ? convertEpochToDateString(dueDate)
+            : ''
+
           this.createEditForm.open()
         })
       }
@@ -169,11 +166,11 @@ class NotesController {
   }
 
   resetForm() {
-    this.createEditForm.querySelector('#title').setAttribute('value', '')
+    this.createEditForm.querySelector('#title').value = ''
     this.createEditForm.querySelector('#description').innerHTML = null
     this.createEditForm.querySelector('#description').value = ''
-    this.createEditForm.querySelector('#importance').value = ''
-    this.createEditForm.querySelector('#due-date').setAttribute('value', '')
+    this.createEditForm.querySelector('#importance').value = DEFAULT_IMPORTANCE
+    this.createEditForm.querySelector('#due-date').value = ''
   }
 
   addFormSubmitListenerAndAction() {
@@ -195,11 +192,12 @@ class NotesController {
             new Date(dueDate.value).getTime()
           )
           .then(() => {
-            this.resetForm()
             this.createEditForm.hide()
             this.sortNotesBy().catch(console.error)
           })
-          .catch((err) => console.log(err))
+          .catch((err) => {
+            console.log(err)
+          })
       } else {
         noteService
           .updateNote(
@@ -210,7 +208,6 @@ class NotesController {
             new Date(dueDate.value).getTime()
           )
           .then(() => {
-            this.resetForm()
             this.createEditForm.hide()
             this.sortNotesBy().catch(console.error)
           })

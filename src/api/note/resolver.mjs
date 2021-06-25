@@ -6,11 +6,6 @@ export const noteResolver = {
     Note: (obj, args) => noteStore.get(args.id),
   },
 
-  // Note: {
-  //   owner: (obj, args, context, info) => {
-  //     return userStore.findByEmail(obj.notedBy)
-  //   },
-  // },
   Mutation: {
     addNote: (obj, args) =>
       noteStore.add(

@@ -7,21 +7,10 @@ const { GraphQLScalarType, Kind } = graphql
 const { gql } = apollo
 
 export const root = gql`
-  directive @auth(isAdmin: Boolean = false) on OBJECT | FIELD_DEFINITION
-
-  enum Role {
-    ADMIN
-    REVIEWER
-    USER
-    UNKNOWN
-  }
-
   scalar Date
-
   type Query {
     root: String
   }
-
   type Mutation {
     root: String
   }
@@ -54,5 +43,4 @@ export const rootResolver = {
 }
 
 export const typeDefs = [root, noteTypeDef]
-
 export const resolvers = [rootResolver, noteResolver]

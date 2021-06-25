@@ -6,7 +6,7 @@ class NoteService {
                     addNote(input: {
                         title: "${title}",
                         description: """${description}""",
-                        importance: ${importance},
+                        ${this.importanceOrEmptyString(importance)}
                         dueDate: ${dueDate}}) {
                           _id
                       }
@@ -19,7 +19,7 @@ class NoteService {
                     updateNote(id: "${id}", input: {
                         title: "${title}",
                         description: """${description}""",
-                        importance: ${importance},
+                        ${this.importanceOrEmptyString(importance)}
                         dueDate: ${dueDate}}) {
                           _id
                       }
@@ -91,20 +91,8 @@ class NoteService {
       )
   }
 
-  sortNotesByImportance(notes, order) {
-    return this.compareNotesBy(notes, 'importance', order)
-  }
-
-  sortNotesBydateCreated(notes, order) {
-    return this.compareNotesBy(notes, 'dateCreated', order)
-  }
-
-  sortNotesByCompletionDate(notes, order) {
-    return this.compareNotesBy(notes, 'completionDate', order)
-  }
-
-  sortNotesByDueDate(notes, order) {
-    return this.compareNotesBy(notes, 'dueDate', order)
+  importanceOrEmptyString(importance) {
+    return importance ? `importance: ${importance},` : ''
   }
 }
 

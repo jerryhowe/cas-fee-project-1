@@ -5,12 +5,13 @@ import path, { dirname, join } from 'path'
 import { fileURLToPath } from 'url'
 
 import apollo from 'apollo-server-express'
+import dotenv from 'dotenv'
 import { resolvers, typeDefs } from './api/root.mjs'
 
+dotenv.config()
 const currentDir = dirname(fileURLToPath(import.meta.url))
 
 const app = express()
-const port = 4000
 
 app.use(express.static(join(currentDir, './public')))
 
@@ -31,7 +32,10 @@ app.get('/', (req, res) => {
 
 server.applyMiddleware({ app, path: '/graphql' })
 
-const hostname = '127.0.0.1'
+const port = process.env.PORT || 3000
+const hostname = process.env.HOST || '127.0.0.1'
+const protocol = process.env.PROTOCOL || 'http'
+
 app.listen(port, hostname, () => {
-  console.log(`Server running at http://${hostname}:${port}/`)
+  console.log(`Server running at ${protocol}://${hostname}:${port}/`)
 })

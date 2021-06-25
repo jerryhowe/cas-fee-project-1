@@ -1,5 +1,22 @@
 # Getting Started
 
+### Setup configuration file
+
+Copy .env.template to .env and adjust the properties accordingly.
+
+|Config Property| Config Description
+|---|---|
+|HOST | the host you wish to run the application on|
+|PORT | the port you wish to run the application on|
+|PROTOCOL | the application protocol (http/https)|
+|TEST_DATA | the path to your test data (default: \_\_test_data\_\_/notes.db)| 
+```shell
+cp .env.template .env
+```
+#### * important: keep TEST_DATA value if you wish to start the application with some test data to test sorting mechanism more easily.
+
+
+### Available NPM scripts
 | Commands  |  Description |
 |---|---|
 | ```npm run stylelint```  |   Tests whether the CSS files are OK. |
@@ -11,3 +28,4 @@
 | ```npm run all```  |   Runs the tests for CSS / HTML / JS. |
 | ```npm run fix all```  |  Fixes all CSS / HTML / JS that are auto-fixable. |
 | ```npm run start```  |  Starts the web server at: http://localhost:3000 |
+| ```npm run dev```  |  Starts the web server at: http://localhost:3000 in Dev mode with FileWatcher |
