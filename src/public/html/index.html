@@ -5,11 +5,11 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
   <link rel="stylesheet" href="../styles/index.css">
   <script src="../scripts/libs/handlebars-v4.7.7.js" defer></script>
+  <script src="../scripts/libs/fontawesome-v5.15.3.js" defer></script>
   <script src="../scripts/utils/handlebars-helpers.js" defer></script>
   <script type="module" src="../scripts/controllers/note-controller.mjs"></script>
   <script type="module" src="../scripts/controllers/theme-controller.mjs"></script>
   <script src="../modal.js"></script>
-  <script src="https://kit.fontawesome.com/0b73532c56.js" crossorigin="anonymous"></script>
   <title>Notes Pro</title>
   <script id="notes-list-template" type="text/x-handlebars-template">
     <div class="notes-list">
@@ -25,7 +25,7 @@
               </label>
               <div class="note-child-title-desc title-desc">
                 <header>
-                  <h3>{{title}}</h3><h4>{{importance}}</h4>
+                  <h3>{{title}} {{#if @root.showDueDate}}[{{dueDate}}]{{/if}}</h3><h4>{{importance}}</h4>
                 </header>
                 <textarea readonly>{{description}}</textarea>
               </div>
@@ -60,6 +60,11 @@
       <i class="fas fa-plus"></i>
     </button>
     <div class="controls">
+      <b>Show Due Date</b>
+      <label class="toggle">
+        <input id="show-due-date-toggle" type="checkbox">
+        <span class="slider round"></span>
+      </label>
       <b>Show Completed</b>
       <label class="toggle">
         <input id="show-completed-toggle" type="checkbox">

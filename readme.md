@@ -8,7 +8,6 @@ Copy .env.template to .env and adjust the properties accordingly.
 |---|---|
 |HOST | the host you wish to run the application on|
 |PORT | the port you wish to run the application on|
-|PROTOCOL | the application protocol (http/https)|
 |TEST_DATA | the path to your test data (default: \_\_test_data\_\_/notes.db)| 
 ```shell
 cp .env.template .env
@@ -28,4 +27,4 @@ cp .env.template .env
 | ```npm run all```  |   Runs the tests for CSS / HTML / JS. |
 | ```npm run fix all```  |  Fixes all CSS / HTML / JS that are auto-fixable. |
 | ```npm run start```  |  Starts the web server at: http://localhost:3000 |
-| ```npm run dev```  |  Starts the web server at: http://localhost:3000 in Dev mode with FileWatcher |
+| ```npm run dev```  |  Starts the web server at: http://localhost:3000 in Dev mode with Nodemon FileWatcher. Your application will auto restart when changes are detected in relevant files. |

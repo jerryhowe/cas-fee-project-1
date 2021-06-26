@@ -18,11 +18,17 @@ class NotesController {
     this.showCompleted = document.querySelector(
       '#show-completed-toggle'
     ).checked
+    this.showDueDate = document.querySelector('#show-completed-toggle').checked
     this.notesContainer = document.querySelector('#notes-container')
     this.createEditForm = document.querySelector('#create-edit-modal')
     if (valueStorage.getItem('showCompleted')) {
       document
         .querySelector('#show-completed-toggle')
+        .setAttribute('checked', '')
+    }
+    if (valueStorage.getItem('showDueDate')) {
+      document
+        .querySelector('#show-due-date-toggle')
         .setAttribute('checked', '')
     }
   }
@@ -38,7 +44,7 @@ class NotesController {
         valueStorage.getItem(columnName)
       )
     }
-    const parsedNotes = notes.map((note) => {
+    this.parsedNotes = notes.map((note) => {
       const {
         _id,
         title,
@@ -63,9 +69,13 @@ class NotesController {
         done,
       }
     })
+    this.showNotes()
+  }
 
+  showNotes() {
     this.notesContainer.innerHTML = this.noteTemplateCompiled({
-      parsedNotes,
+      parsedNotes: this.parsedNotes,
+      showDueDate: valueStorage.getItem('showDueDate'),
     })
   }
 
@@ -97,6 +107,7 @@ class NotesController {
 
     const createNoteButton = document.querySelector('#create-note-button')
     const showCompletedToggle = document.querySelector('#show-completed-toggle')
+    const showDueDateToggle = document.querySelector('#show-due-date-toggle')
 
     this.addFormSubmitListenerAndAction()
     createNoteButton.addEventListener('click', () => {
@@ -111,6 +122,12 @@ class NotesController {
       this.showCompleted = event.target.checked
       valueStorage.setItem('showCompleted', event.target.checked)
       this.sortNotesBy().catch(console.error)
+    })
+
+    showDueDateToggle.addEventListener('click', (event) => {
+      this.showDueDate = event.target.checked
+      valueStorage.setItem('showDueDate', event.target.checked)
+      this.showNotes()
     })
 
     const deleteConfirmationModal = document.querySelector(
